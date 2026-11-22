@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -102,3 +102,44 @@ def recent_sales_count(db: Session, business_id: int, days: int = 7) -> int:
             .where(Product.business_id == business_id, Sale.date >= since)
         ).all()
     )
+
+
+@router.post("/businesses/{business_id}/sales/import")
+async def import_sales_csv(
+    business_id: int,
+    request: Request,
+    user: User = Depends(current_user),
+    db: Session = Depends(get_session),
+):
+    from fastapi.responses import JSONResponse
+
+    from app.csv_import import ImportError_, parse_sales_csv
+
+    business = owned_business(business_id, user, db)
+    form = await request.form()
+    upload = form.get("file")
+    if upload is None or not hasattr(upload, "read"):
+        return JSONResponse(
+            status_code=422, content={"detail": "Berkas CSV wajib diunggah.", "errors": []}
+        )
+    raw = await upload.read()
+    products = db.scalars(
+        select(Product).where(Product.business_id == business.id, Product.active.is_(True))
+    ).all()
+    products_by_name = {p.name: p.id for p in products}
+    try:
+        rows = parse_sales_csv(raw, products_by_name)
+    except ImportError_ as exc:
+        return JSONResponse(status_code=422, content={"detail": exc.message, "errors": exc.errors})
+
+    try:
+        for row in rows:
+            upsert_sale(db, row["product_id"], row["date"], row["qty_sold"], row["sold_out"])
+        db.commit()
+    except Exception:
+        db.rollback()
+        return JSONResponse(
+            status_code=422,
+            content={"detail": "Impor gagal disimpan.", "errors": [{"line": 0, "message": str(exc)}]},
+        )
+    return {"accepted": len(rows), "business_id": business.id}

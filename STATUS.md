@@ -1,5 +1,5 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T2.6
+Last updated: 2026-11-22T00:10:00Z   Current task: T3.1
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
@@ -11,7 +11,7 @@ Last updated: 2026-11-22T00:10:00Z   Current task: T2.6
 | T2.3 | 2.3 | AUTO | DONE | CRUD + soft delete + validation 422 + cross-user 404; 17 tests total |
 | T2.4 | 2.4 | AUTO | DONE | POST /sales/new all-or-nothing multi-product form; 27 tests |
 | T2.5 | 2.5 | AUTO | DONE | upsert idempotent, inclusive range filter, validation, ownership; 23 tests |
-| T2.6 | 2.6 | AUTO | TODO | |
+| T2.6 | 2.6 | AUTO | DONE | strict CSV parser (header/date/future/qty/product/dup/size/UTF-8) all-or-nothing; 41 tests |
 | T3.1 | 3.1 | AUTO | TODO | |
 | T3.2 | 3.2 | AUTO | TODO | |
 | T3.3 | 3.3 | AUTO | TODO | |
