@@ -1,9 +1,9 @@
 # STATUS
-Last updated: 2026-11-22T00:00:00Z   Current task: T0
+Last updated: 2026-11-22T00:05:00Z   Current task: T1.4
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
-| T0 | - | AUTO | DOING | scaffold |
+| T0 | - | AUTO | DONE | make verify: 2 passed, smoke ok; commit T0 |
 | T1.4 | 1.4 | DRAFT | TODO | |
 | T1.5 | 1.5 | AUTO | TODO | |
 | T2.1 | 2.1 | AUTO | TODO | |
