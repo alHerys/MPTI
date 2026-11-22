@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Impor CSV — ColdStart Kitchen{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>Impor Penjualan CSV</h1>
+  <form method="get" action="/import" class="filters">
+    <label>Usaha
+      <select name="business_id" onchange="this.form.submit()">
+        {% for b in businesses %}
+        <option value="{{ b.id }}" {% if selected and b.id == selected.id %}selected{% endif %}>{{ b.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </form>
+</section>
+{% if not selected %}
+  <p class="empty">Belum ada usaha.</p>
+{% else %}
+<section class="panel">
+  <p class="muted">Format: <code>date,product,qty_sold[,sold_out]</code> — maksimal 5.000 baris / 1 MB. Tanggal format YYYY-MM-DD. <a href="/static/contoh_penjualan.csv" download>Unduh contoh CSV</a>.</p>
+  <form id="import-form" class="stack" enctype="multipart/form-data" data-business-id="{{ selected.id }}">
+    <input type="file" name="file" accept=".csv,text/csv" required>
+    <p><button type="submit">Impor</button></p>
+  </form>
+  <div id="import-result" role="status" aria-live="polite"></div>
+</section>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if selected %}<script src="/static/forms.js" defer></script>{% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — ColdStart Kitchen{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>Rekomendasi Produksi</h1>
+  <form method="get" action="/" class="filters">
+    <label>Usaha
+      <select name="business_id" onchange="this.form.submit()">
+        {% for b in businesses %}
+        <option value="{{ b.id }}" {% if selected and b.id == selected.id %}selected{% endif %}>{{ b.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Tanggal produksi
+      <input type="date" name="date_str" value="{{ target_date }}" onchange="this.form.submit()">
+    </label>
+  </form>
+</section>
+{% if not selected %}
+  <p class="empty">Belum ada usaha. Buat usaha pertama Anda di halaman <a href="/business">Usaha &amp; Menu</a>.</p>
+{% else %}
+  <p class="stage-note" id="stage-note" data-business-id="{{ selected.id }}" data-date="{{ target_date }}">
+    Memuat rekomendasi…
+  </p>
+  <div class="card-grid" id="recommendation-grid" aria-live="polite"></div>
+  <noscript><p class="error">JavaScript diperlukan untuk menampilkan kartu rekomendasi.</p></noscript>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if selected %}<script src="/static/dashboard.js" defer></script>{% endif %}
+{% endblock %}

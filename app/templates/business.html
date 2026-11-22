@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Usaha &amp; Menu — ColdStart Kitchen{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>Usaha &amp; Menu</h1>
+  <form method="get" action="/business" class="filters">
+    <label>Usaha
+      <select name="business_id" onchange="this.form.submit()">
+        {% for b in businesses %}
+        <option value="{{ b.id }}" {% if selected and b.id == selected.id %}selected{% endif %}>{{ b.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </form>
+</section>
+{% if not selected %}
+  <p class="empty">Belum ada usaha.</p>
+{% else %}
+<section class="panel" id="profile-panel" data-business-id="{{ selected.id }}">
+  <h2>Profil Usaha</h2>
+  <form id="profile-form" class="form-grid">
+    <label>Nama usaha <input name="name" value="{{ selected.name }}" required></label>
+    <label>Tipe usaha
+      <select name="business_type">
+        {% for t in ["warung","cafe","gerobak","bakery","kantin"] %}
+        <option value="{{ t }}" {% if selected.business_type == t %}selected{% endif %}>{{ t }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Tipe lokasi
+      <select name="location_type">
+        {% for t in ["kampus","kantor","permukiman","pasar"] %}
+        <option value="{{ t }}" {% if selected.location_type == t %}selected{% endif %}>{{ t }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Faktor kapasitas <input type="number" step="0.1" min="0.1" name="capacity_factor" value="{{ selected.capacity_factor }}"></label>
+    <div class="form-actions"><button type="submit">Simpan profil</button></div>
+    <p class="form-message" id="profile-message" role="status"></p>
+  </form>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>Menu</h2>
+    <button type="button" id="toggle-product-form" class="button-ghost">+ Tambah produk</button>
+  </div>
+  <form id="product-form" class="form-grid hidden" data-business-id="{{ selected.id }}">
+    <input type="hidden" name="product_id" value="">
+    <label>Nama produk <input name="name" required maxlength="120"></label>
+    <label>Kategori
+      <select name="category">
+        {% for c in ["nasi","mie","snack","minuman","roti"] %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Harga jual (Rp) <input type="number" name="price" min="1" step="1" required></label>
+    <label>Biaya per porsi (Rp) <input type="number" name="unit_cost" min="0" step="1" required></label>
+    <label>Nilai sisa (Rp) <input type="number" name="salvage_value" min="0" step="1" value="0"></label>
+    <div class="form-actions"><button type="submit">Simpan produk</button><button type="button" id="cancel-product" class="button-ghost">Batal</button></div>
+    <p class="form-message" id="product-message" role="status"></p>
+  </form>
+  <table class="data-table" id="product-table">
+    <thead><tr><th>Nama</th><th>Kategori</th><th>Harga</th><th>Biaya</th><th>Sisa</th><th>Aksi</th></tr></thead>
+    <tbody>
+      {% for p in products %}
+      <tr data-product='{{ {"id": p.id, "name": p.name, "category": p.category, "price": p.price, "unit_cost": p.unit_cost, "salvage_value": p.salvage_value} | tojson }}'>
+        <td>{{ p.name }}</td>
+        <td>{{ p.category }}</td>
+        <td>{{ "{:,}".format(p.price).replace(",", ".") }}</td>
+        <td>{{ "{:,}".format(p.unit_cost).replace(",", ".") }}</td>
+        <td>{{ "{:,}".format(p.salvage_value).replace(",", ".") }}</td>
+        <td class="actions">
+          <button type="button" class="button-ghost js-edit">Ubah</button>
+          <button type="button" class="button-danger js-deactivate">Nonaktifkan</button>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">Belum ada produk aktif.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if selected %}<script src="/static/forms.js" defer></script>{% endif %}
+{% endblock %}

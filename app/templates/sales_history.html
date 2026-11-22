@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Riwayat Penjualan — ColdStart Kitchen{% endblock %}
+{% block content %}
+<section class="page-head">
+  <h1>Riwayat Penjualan</h1>
+  <form method="get" action="/sales" class="filters">
+    <label>Usaha
+      <select name="business_id" onchange="this.form.submit()">
+        {% for b in businesses %}
+        <option value="{{ b.id }}" {% if selected and b.id == selected.id %}selected{% endif %}>{{ b.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Dari <input type="date" name="start" value="{{ start }}"></label>
+    <label>Sampai <input type="date" name="end" value="{{ end }}"></label>
+    <button type="submit" class="button-ghost">Filter</button>
+  </form>
+</section>
+{% if not selected %}
+  <p class="empty">Belum ada usaha.</p>
+{% else %}
+<section class="panel">
+  <h2>14 hari terakhir</h2>
+  {% set maxqty = (chart | map(attribute='qty') | max) or 1 %}
+  <svg class="bar-chart" viewBox="0 0 560 160" role="img" aria-label="Grafik batang penjualan 14 hari terakhir">
+    <line x1="0" y1="140" x2="560" y2="140" class="axis"></line>
+    {% for point in chart %}
+    {% set x = loop.index0 * 40 + 8 %}
+    {% set h = (point.qty / maxqty * 120) if maxqty else 0 %}
+    <rect x="{{ x }}" y="{{ 140 - h }}" width="24" height="{{ h }}" class="bar"></rect>
+    <text x="{{ x + 12 }}" y="154" class="chart-label">{{ point.date[8:] }}</text>
+    {% endfor %}
+  </svg>
+  <table class="data-table">
+    <thead><tr><th>Produk</th><th>Tanggal</th><th>Terjual</th><th>Kehabisan stok</th></tr></thead>
+    <tbody>
+      {% for sale, name in rows %}
+      <tr><td>{{ name }}</td><td>{{ sale.date.isoformat() }}</td><td>{{ sale.qty_sold }}</td><td>{{ "ya" if sale.sold_out else "tidak" }}</td></tr>
+      {% else %}
+      <tr><td colspan="4" class="muted">Tidak ada penjualan pada rentang ini.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock %}
