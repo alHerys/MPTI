@@ -32,6 +32,12 @@ def validate_production_settings() -> None:
     if not is_production():
         return
     if not secret_key():
-        raise RuntimeError("SECRET_KEY wajib diisi saat APP_ENV=production.")
+        raise RuntimeError(
+            "SECRET_KEY wajib diisi saat APP_ENV=production. Isi variabel lingkungan SECRET_KEY."
+        )
+    if len(secret_key()) < 16:
+        raise RuntimeError("SECRET_KEY terlalu pendek (minimal 16 karakter).")
     if demo_password() == "demo123":
-        raise RuntimeError("DEMO_PASSWORD default tidak boleh dipakai di production.")
+        raise RuntimeError(
+            "DEMO_PASSWORD default (demo123) tidak boleh dipakai di production. Isi DEMO_PASSWORD."
+        )

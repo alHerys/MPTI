@@ -7,3 +7,4 @@ var/
 .env
 .env.prod
 .DS_Store
+var/

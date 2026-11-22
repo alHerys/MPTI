@@ -1,5 +1,5 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T4.6
+Last updated: 2026-11-22T00:10:00Z   Current task: T5.1
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
@@ -24,7 +24,7 @@ Last updated: 2026-11-22T00:10:00Z   Current task: T4.6
 | T4.3 | 4.3 | AUTO | DONE | /sales history table + 14-day inline SVG bars + date filter; verified live |
 | T4.4 | 4.4 | AUTO | DONE | dashboard.js fetches /api/businesses/{id}/recommendations?date=; verified live in browser for H0/H3/H7 |
 | T4.5 | 4.5 | AUTO | DONE | login/logout/session, env demo creds, idempotent auto-seed H0/H3/H7, rate limit 429; 95 tests |
-| T4.6 | 4.6 | AUTO+HUMAN | TODO | |
+| T4.6 | 4.6 | AUTO+HUMAN | HUMAN | Code+artifacts DONE (prod refusals, secure cookie, 429, healthz, run_prod.sh verified on sqlite; docker build UNVERIFIED — docker absent; Postgres checked by review only). HUMAN: perform deploy and record live URL. |
 | T5.1 | 5.1 | AUTO | TODO | |
 | T5.2 | 5.2 | HUMAN | TODO | |
 | T5.3 | 5.3 | AUTO | TODO | |
