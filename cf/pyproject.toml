@@ -1,0 +1,17 @@
+[project]
+name = "coldstart-kitchen-cf"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi",
+    "jinja2",
+    "python-multipart",
+    "itsdangerous",
+    "sqlalchemy",
+]
+
+[dependency-groups]
+dev = [
+    "workers-py",
+    "workers-runtime-sdk",
+]

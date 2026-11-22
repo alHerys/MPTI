@@ -8,3 +8,6 @@ var/
 .env.prod
 .DS_Store
 var/
+cf/node_modules/
+cf/.wrangler/
+cf/.venv/
