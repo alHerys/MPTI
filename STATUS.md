@@ -1,5 +1,5 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T2.3
+Last updated: 2026-11-22T00:10:00Z   Current task: T2.5
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
@@ -8,7 +8,7 @@ Last updated: 2026-11-22T00:10:00Z   Current task: T2.3
 | T1.5 | 1.5 | AUTO | DONE | ASCII wireframes + static prototype (6 screens, no external assets) |
 | T2.1 | 2.1 | AUTO | DONE | 6 tests: CRUD roundtrip, unique(product,date), qty check, scrypt |
 | T2.2 | 2.2 | AUTO | DONE | 168 series x 90 days = 15,120 rows; seed-42 hash test; README declares synthetic |
-| T2.3 | 2.3 | AUTO | TODO | |
+| T2.3 | 2.3 | AUTO | DONE | CRUD + soft delete + validation 422 + cross-user 404; 17 tests total |
 | T2.4 | 2.4 | AUTO | TODO | |
 | T2.5 | 2.5 | AUTO | TODO | |
 | T2.6 | 2.6 | AUTO | TODO | |

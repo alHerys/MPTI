@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}ColdStart Kitchen{% endblock %}</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+{% if user %}
+<header class="topbar">
+  <a class="brand" href="/">ColdStart Kitchen</a>
+  <nav class="mainnav" aria-label="Navigasi utama">
+    <a href="/" class="{% if nav == 'dashboard' %}active{% endif %}">Dashboard</a>
+    <a href="/business" class="{% if nav == 'business' %}active{% endif %}">Usaha &amp; Menu</a>
+    <a href="/sales/new" class="{% if nav == 'sales_new' %}active{% endif %}">Catat Penjualan</a>
+    <a href="/sales" class="{% if nav == 'sales' %}active{% endif %}">Riwayat</a>
+    <a href="/import" class="{% if nav == 'import' %}active{% endif %}">Impor CSV</a>
+  </nav>
+  <form method="post" action="/logout" class="logout-form">
+    <span class="who">{{ user.username }}</span>
+    <button type="submit" class="link-button">Keluar</button>
+  </form>
+</header>
+{% endif %}
+<main class="page">
+{% block content %}{% endblock %}
+</main>
+{% block scripts %}{% endblock %}
+</body>
+</html>
