@@ -1,12 +1,12 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T2.1
+Last updated: 2026-11-22T00:10:00Z   Current task: T2.2
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
 | T0 | - | AUTO | DONE | make verify: 2 passed, smoke ok; commit T0 |
 | T1.4 | 1.4 | DRAFT | DONE | 18 FR + NFR with GWT criteria; tests tagged by FR id |
 | T1.5 | 1.5 | AUTO | TODO | |
-| T2.1 | 2.1 | AUTO | TODO | |
+| T2.1 | 2.1 | AUTO | DONE | 6 tests: CRUD roundtrip, unique(product,date), qty check, scrypt |
 | T2.2 | 2.2 | AUTO | TODO | |
 | T2.3 | 2.3 | AUTO | TODO | |
 | T2.4 | 2.4 | AUTO | TODO | |
