@@ -6,13 +6,8 @@ from dataclasses import dataclass
 import numpy as np
 
 from app.ml.config import (
-    DEFAULT_CAPACITY_FACTOR,
-    FALLBACK_MU0,
-    FALLBACK_PHI_DAY,
-    N_NEIGHBORS,
-    NEIGHBOR_DISTANCE_EPS,
-    PHI_DAY_MAX,
-    PHI_DAY_MIN,
+    DEFAULT_CAPACITY_FACTOR, FALLBACK_MU0, FALLBACK_PHI_DAY, N_NEIGHBORS,
+    NEIGHBOR_DISTANCE_EPS, PHI_DAY_MAX, PHI_DAY_MIN,
 )
 from app.ml.reference import ReferenceData, nearest_neighbors, query_feature
 
@@ -43,14 +38,7 @@ def weighted_median(values: list[float], weights: list[float]) -> float:
 
 
 def _fallback() -> Prior:
-    return Prior(
-        mu0=FALLBACK_MU0,
-        phi_day=FALLBACK_PHI_DAY,
-        weekday_profile=(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),
-        neighbor_ids=(),
-        neighbor_distance_mean=0.0,
-        low_reference=True,
-    )
+    return Prior(FALLBACK_MU0, FALLBACK_PHI_DAY, (1.0,) * 7, (), 0.0, True)
 
 
 def build_prior(
@@ -66,41 +54,31 @@ def build_prior(
     """PLAN.md 5.2 steps 1-6."""
     if reference.empty:
         return _fallback()
-
-    vendor_capacity = (
-        DEFAULT_CAPACITY_FACTOR if capacity_factor is None else float(capacity_factor)
-    )
+    vendor_capacity = DEFAULT_CAPACITY_FACTOR if capacity_factor is None else float(capacity_factor)
     feature = query_feature(reference, business_type, location_type, category, price)
     neighbors = nearest_neighbors(reference, feature, exclude_ids=exclude_ids, k=N_NEIGHBORS)
     if not neighbors:
         return _fallback()
 
-    means = [series.mean_daily for series, _ in neighbors]
-    weights = [1.0 / (distance + NEIGHBOR_DISTANCE_EPS) for _, distance in neighbors]
-    base = weighted_median(means, weights)
-
-    neighbor_capacity = float(np.median([series.capacity_factor for series, _ in neighbors]))
-    if neighbor_capacity <= 0:
-        neighbor_capacity = DEFAULT_CAPACITY_FACTOR
+    base = weighted_median(
+        [series.mean_daily for series, _ in neighbors],
+        [1.0 / (distance + NEIGHBOR_DISTANCE_EPS) for _, distance in neighbors],
+    )
+    neighbor_capacity = float(np.median([s.capacity_factor for s, _ in neighbors])) or DEFAULT_CAPACITY_FACTOR
     mu0 = max(base * (vendor_capacity / neighbor_capacity), 0.01)
 
-    phi = float(np.median([series.dispersion for series, _ in neighbors]))
-    if not np.isfinite(phi):
-        phi = FALLBACK_PHI_DAY
-    phi = float(np.clip(phi, PHI_DAY_MIN, PHI_DAY_MAX))
+    phi = float(np.median([s.dispersion for s, _ in neighbors]))
+    phi = FALLBACK_PHI_DAY if not np.isfinite(phi) else float(np.clip(phi, PHI_DAY_MIN, PHI_DAY_MAX))
 
-    profile = np.mean([series.weekday_factor for series, _ in neighbors], axis=0)
+    profile = np.mean([s.weekday_factor for s, _ in neighbors], axis=0)
     profile_mean = float(np.mean(profile))
-    if profile_mean <= 0:
-        profile = np.ones(7)
-    else:
-        profile = profile / profile_mean
+    profile = np.ones(7) if profile_mean <= 0 else profile / profile_mean
 
     return Prior(
         mu0=float(mu0),
         phi_day=phi,
         weekday_profile=tuple(float(x) for x in profile),
-        neighbor_ids=tuple(series.series_id for series, _ in neighbors),
-        neighbor_distance_mean=float(np.mean([distance for _, distance in neighbors])),
+        neighbor_ids=tuple(s.series_id for s, _ in neighbors),
+        neighbor_distance_mean=float(np.mean([d for _, d in neighbors])),
         low_reference=len(reference.series) < N_NEIGHBORS,
     )

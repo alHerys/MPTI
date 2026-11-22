@@ -87,12 +87,8 @@ def recommend(
     posterior = compute_posterior(prior, sales_rows, target_date)
     prediction = predict(posterior.target_mean, prior.phi_day, posterior.n_days)
     optimization = optimize(
-        posterior.target_mean,
-        prior.phi_day,
-        posterior.n_days,
-        product.price,
-        product.unit_cost,
-        product.salvage_value,
+        posterior.target_mean, prior.phi_day, posterior.n_days,
+        product.price, product.unit_cost, product.salvage_value,
     )
     confidence = confidence_label(
         posterior.n_days, prediction.p10, prediction.p50, prediction.p90, prior.low_reference

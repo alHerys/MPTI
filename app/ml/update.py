@@ -18,10 +18,7 @@ class SaleRow:
 
     @property
     def adjusted_qty(self) -> float:
-        qty = float(self.qty_sold)
-        if self.sold_out:
-            qty *= STOCKOUT_UPLIFT
-        return qty
+        return float(self.qty_sold) * (STOCKOUT_UPLIFT if self.sold_out else 1.0)
 
 
 @dataclass(frozen=True)
@@ -40,23 +37,14 @@ class Posterior:
 
 
 def stage_for(n_days: int) -> str:
-    if n_days < 3:
-        return "H0"
-    if n_days < 7:
-        return "H3"
-    return "H7"
-
-
-def adjusted_values(sales_rows: list[SaleRow]) -> list[float]:
-    return [row.adjusted_qty for row in sales_rows]
+    return "H0" if n_days < 3 else ("H3" if n_days < 7 else "H7")
 
 
 def compute_posterior(prior: Prior, sales_rows: list[SaleRow], target_date: date) -> Posterior:
     rows = sorted(sales_rows, key=lambda r: r.date)
     n = len(rows)
-    values = adjusted_values(rows)
+    values = [row.adjusted_qty for row in rows]
     ybar = float(np.mean(values)) if values else 0.0
-
     weight = n / (n + SHRINKAGE_K) if n > 0 else 0.0
     m = weight * ybar + (1.0 - weight) * prior.mu0
 
@@ -72,14 +60,13 @@ def compute_posterior(prior: Prior, sales_rows: list[SaleRow], target_date: date
             own_ratio = float(np.mean(same_weekday) / ybar)
             f_target = f_ref + (weekday_count / (weekday_count + OWN_WEEKDAY_K)) * (own_ratio - f_ref)
 
-    target_mean = max(m * f_target, MIN_TARGET_MEAN)
     return Posterior(
         n_days=n,
         ybar=ybar,
         weight=weight,
         m=m,
         f_target=f_target,
-        target_mean=target_mean,
+        target_mean=max(m * f_target, MIN_TARGET_MEAN),
         stage=stage_for(n),
         has_stockout=any(row.sold_out for row in rows),
         weekday_own_ratio=own_ratio,

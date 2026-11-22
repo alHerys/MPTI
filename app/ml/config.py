@@ -21,14 +21,12 @@ ALPHA_MIN = 0.05
 ALPHA_MAX = 0.95
 QUANTILE_LEVELS = (0.10, 0.50, 0.90)
 NEAREST_BANDS = ("P10", "P50", "P90")
-
 CONFIDENCE_LEVELS = ("rendah", "sedang", "tinggi")
 CONFIDENCE_RATIO_LIMIT = 1.2
 WEEKDAY_REASON_THRESHOLD = 0.10
-
 WEEKDAY_NAMES = ("Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu")
 
-# Reference generator (PLAN.md 5.1). Weekday factors indexed Monday..Sunday.
+# Reference generator (PLAN.md 5.1), Monday..Sunday.
 WEEKDAY_FACTORS = {
     "nasi": (1.00, 1.00, 1.00, 1.02, 1.08, 1.10, 0.80),
     "mie": (1.00, 1.00, 1.00, 1.02, 1.06, 1.12, 0.80),

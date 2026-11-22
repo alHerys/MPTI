@@ -1,7 +1,12 @@
 """Demo seeding: one demo user plus three businesses at H0, H3, H7."""
 from __future__ import annotations
 
+import sys
 from datetime import date, timedelta
+from pathlib import Path
+
+if str(Path(__file__).resolve().parents[1]) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import numpy as np
 from sqlalchemy import select
@@ -113,3 +118,22 @@ def seed_demo(db: Session, username: str | None = None, password: str | None = N
                     )
     db.commit()
     return True
+
+
+def main() -> int:
+    """CLI: seed the configured database (idempotent)."""
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from app.db import Database
+
+    database = Database()
+    with database.session() as session:
+        seeded = seed_demo(session)
+    print("seed: created demo data" if seeded else "seed: database already has users, skipped")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

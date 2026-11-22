@@ -25,11 +25,9 @@ def effective_dispersion(phi_day: float, n_days: int) -> float:
 
 
 def nbinom_params(mean: float, phi_eff: float) -> tuple[float, float]:
-    mean = max(float(mean), 1e-6)
-    phi_eff = max(float(phi_eff), 1e-6)
+    mean, phi_eff = max(float(mean), 1e-6), max(float(phi_eff), 1e-6)
     r = 1.0 / phi_eff
-    p = r / (r + mean)
-    return r, p
+    return r, r / (r + mean)
 
 
 def _quantile(r: float, p: float, level: float) -> int:
@@ -45,19 +43,10 @@ def predict(mean: float, phi_day: float, n_days: int) -> Prediction:
     quantiles = np.maximum.accumulate(
         np.array([_quantile(r, p, 0.10), _quantile(r, p, 0.50), _quantile(r, p, 0.90)], dtype=int)
     )
-    return Prediction(
-        mean=float(mean),
-        phi_eff=phi_eff,
-        r=r,
-        p=p,
-        p10=int(quantiles[0]),
-        p50=int(quantiles[1]),
-        p90=int(quantiles[2]),
-    )
+    return Prediction(float(mean), phi_eff, r, p, int(quantiles[0]), int(quantiles[1]), int(quantiles[2]))
 
 
 def quantile_at(mean: float, phi_day: float, n_days: int, level: float) -> int:
-    """Exact integer quantile for an arbitrary level (used by the newsvendor step)."""
+    """Exact integer quantile for an arbitrary level (newsvendor step)."""
     phi_eff = effective_dispersion(phi_day, n_days)
-    r, p = nbinom_params(mean, phi_eff)
-    return _quantile(r, p, level)
+    return _quantile(*nbinom_params(mean, phi_eff), level)
