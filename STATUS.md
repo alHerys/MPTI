@@ -1,5 +1,5 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T1.1
+Last updated: 2026-11-22T00:10:00Z   Current task: T9
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
@@ -29,10 +29,10 @@ Last updated: 2026-11-22T00:10:00Z   Current task: T1.1
 | T5.2 | 5.2 | HUMAN | HUMAN | docs/uat_kit.md created (7 scenarios + result sheet); execution needs human testers |
 | T5.3 | 5.3 | AUTO | DONE | edge cases (price<=cost, zero sales, dup dates, future, huge qty, unicode, CRLF+BOM) + bug_log.md; 134 tests |
 | T5.4 | 5.4 | DRAFT | DONE | one-page Indonesian guide, 9 steps + 3 tips, self-tested live |
-| T5.5 | 5.5 | DRAFT+HUMAN | TODO | |
-| T1.1 | 1.1 | DRAFT | TODO | |
-| T1.2 | 1.2 | DRAFT | TODO | |
-| T1.3 | 1.3 | DRAFT | TODO | |
+| T5.5 | 5.5 | DRAFT+HUMAN | HUMAN | laporan_akhir.md + demo_script.md (DRAF); live demo HUMAN |
+| T1.1 | 1.1 | DRAFT | DONE | business_case.md (DRAF): problem/benefit/feasibility, external stats marked unverified, no SteadyMouse row |
+| T1.2 | 1.2 | DRAFT | DONE | project_charter.md (DRAF): objectives, MOV, stakeholders, assumptions, constraints |
+| T1.3 | 1.3 | DRAFT | DONE | project_plan.md (DRAF): scope, WBS summary, 5-sprint schedule, cost note, 8-risk register |
 | T9 | - | AUTO | TODO | |
 
 ## Blocked log
