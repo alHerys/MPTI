@@ -2,9 +2,14 @@
 from __future__ import annotations
 
 from fastapi import Depends, HTTPException, Request
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 from app.models import Business, Product, User
+
+
+class LoginRequired(Exception):
+    """Raised by page routes so the handler can redirect to /login."""
 
 
 def get_session(request: Request) -> Session:
@@ -28,6 +33,14 @@ def current_user(request: Request, db: Session = Depends(get_session)) -> User:
     if user is None:
         request.session.clear()
         raise HTTPException(status_code=401, detail="Sesi tidak valid. Silakan masuk lagi.")
+    return user
+
+
+def page_user(request: Request, db: Session = Depends(get_session)) -> User:
+    user_id = request.session.get("user_id")
+    user = db.get(User, int(user_id)) if user_id else None
+    if user is None:
+        raise LoginRequired()
     return user
 
 

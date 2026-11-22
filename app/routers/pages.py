@@ -9,7 +9,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.deps import current_user, get_session
+from app.deps import LoginRequired, get_session, page_user
 from app.models import Business, Product, User
 
 router = APIRouter(tags=["pages"])
@@ -37,7 +37,7 @@ def dashboard(
     request: Request,
     business_id: int | None = None,
     date_str: str | None = None,
-    user: User = Depends(current_user),
+    user: User = Depends(page_user),
     db: Session = Depends(get_session),
 ):
     businesses, selected = _business_or_redirect(db, user, business_id)
@@ -64,7 +64,7 @@ def dashboard(
 def business_page(
     request: Request,
     business_id: int | None = None,
-    user: User = Depends(current_user),
+    user: User = Depends(page_user),
     db: Session = Depends(get_session),
 ):
     businesses, selected = _business_or_redirect(db, user, business_id)
@@ -86,7 +86,7 @@ def business_page(
 def sales_new_page(
     request: Request,
     business_id: int | None = None,
-    user: User = Depends(current_user),
+    user: User = Depends(page_user),
     db: Session = Depends(get_session),
 ):
     businesses, selected = _business_or_redirect(db, user, business_id)
@@ -117,7 +117,7 @@ def sales_history_page(
     business_id: int | None = None,
     start: str | None = None,
     end: str | None = None,
-    user: User = Depends(current_user),
+    user: User = Depends(page_user),
     db: Session = Depends(get_session),
 ):
     from datetime import timedelta as _td
@@ -178,7 +178,7 @@ def sales_history_page(
 def import_page(
     request: Request,
     business_id: int | None = None,
-    user: User = Depends(current_user),
+    user: User = Depends(page_user),
     db: Session = Depends(get_session),
 ):
     businesses, selected = _business_or_redirect(db, user, business_id)
@@ -192,7 +192,7 @@ def import_page(
 @router.post("/sales/new")
 async def sales_new_submit(
     request: Request,
-    user: User = Depends(current_user),
+    user: User = Depends(page_user),
     db: Session = Depends(get_session),
 ):
     """T2.4: one date, one qty per active product, all-or-nothing."""

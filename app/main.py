@@ -43,6 +43,15 @@ def create_app(database_url: str | None = None, seed: bool = True, startup_check
     if static_dir.exists():
         app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
+    from fastapi import Request as _Request
+    from fastapi.responses import RedirectResponse as _Redirect
+
+    from app.deps import LoginRequired
+
+    @app.exception_handler(LoginRequired)
+    async def _login_required_handler(request: _Request, exc: LoginRequired):
+        return _Redirect(url="/login", status_code=303)
+
     from app.routers import auth as auth_router
     from app.routers import businesses as businesses_router
     from app.routers import pages as pages_router

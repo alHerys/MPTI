@@ -1,5 +1,5 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T4.5
+Last updated: 2026-11-22T00:10:00Z   Current task: T4.1
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
@@ -23,7 +23,7 @@ Last updated: 2026-11-22T00:10:00Z   Current task: T4.5
 | T4.2 | 4.2 | AUTO | TODO | |
 | T4.3 | 4.3 | AUTO | TODO | |
 | T4.4 | 4.4 | AUTO | TODO | |
-| T4.5 | 4.5 | AUTO | TODO | |
+| T4.5 | 4.5 | AUTO | DONE | login/logout/session, env demo creds, idempotent auto-seed H0/H3/H7, rate limit 429; 95 tests |
 | T4.6 | 4.6 | AUTO+HUMAN | TODO | |
 | T5.1 | 5.1 | AUTO | TODO | |
 | T5.2 | 5.2 | HUMAN | TODO | |
