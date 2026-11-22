@@ -1,5 +1,5 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T3.7
+Last updated: 2026-11-22T00:10:00Z   Current task: T4.5
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
@@ -18,7 +18,7 @@ Last updated: 2026-11-22T00:10:00Z   Current task: T3.7
 | T3.4 | 3.4 | AUTO | DONE | newsvendor alpha, clamping, worked examples, 422 path; 8 tests |
 | T3.5 | 3.5 | AUTO | DONE | confidence rules + Indonesian reason templates in fixed order; 6 tests |
 | T3.6 | 3.6 | AUTO | DONE | pure engine + product/business recommendation APIs, ownership; 84 tests total |
-| T3.7 | 3.7 | AUTO | TODO | |
+| T3.7 | 3.7 | AUTO | DONE | LOO-business backtest: H0 WAPE 41.4% vs global 54.1%, H7 39.8%, coverage 82.9-86.6%; make report |
 | T4.1 | 4.1 | AUTO | TODO | |
 | T4.2 | 4.2 | AUTO | TODO | |
 | T4.3 | 4.3 | AUTO | TODO | |
