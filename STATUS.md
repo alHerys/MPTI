@@ -1,10 +1,10 @@
 # STATUS
-Last updated: 2026-11-22T00:05:00Z   Current task: T1.4
+Last updated: 2026-11-22T00:10:00Z   Current task: T2.1
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
 | T0 | - | AUTO | DONE | make verify: 2 passed, smoke ok; commit T0 |
-| T1.4 | 1.4 | DRAFT | TODO | |
+| T1.4 | 1.4 | DRAFT | DONE | 18 FR + NFR with GWT criteria; tests tagged by FR id |
 | T1.5 | 1.5 | AUTO | TODO | |
 | T2.1 | 2.1 | AUTO | TODO | |
 | T2.2 | 2.2 | AUTO | TODO | |
