@@ -1,11 +1,11 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T1.5
+Last updated: 2026-11-22T00:10:00Z   Current task: T2.3
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
 | T0 | - | AUTO | DONE | make verify: 2 passed, smoke ok; commit T0 |
 | T1.4 | 1.4 | DRAFT | DONE | 18 FR + NFR with GWT criteria; tests tagged by FR id |
-| T1.5 | 1.5 | AUTO | TODO | |
+| T1.5 | 1.5 | AUTO | DONE | ASCII wireframes + static prototype (6 screens, no external assets) |
 | T2.1 | 2.1 | AUTO | DONE | 6 tests: CRUD roundtrip, unique(product,date), qty check, scrypt |
 | T2.2 | 2.2 | AUTO | DONE | 168 series x 90 days = 15,120 rows; seed-42 hash test; README declares synthetic |
 | T2.3 | 2.3 | AUTO | TODO | |

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototipe ColdStart Kitchen</title>
+<style>
+  :root { --bg:#f6f4ef; --card:#fff; --ink:#22201c; --muted:#6b655c; --line:#ddd6ca; --accent:#b4532a; --ok:#2f6b4f; --warn:#9a6b12; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--ink); }
+  header { background:var(--ink); color:#fff; padding:12px 20px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  header .brand { font-weight:700; margin-right:auto; }
+  header a { color:#fff; text-decoration:none; padding:4px 8px; border-radius:6px; font-size:14px; }
+  header a:hover, header a.active { background:#ffffff22; }
+  main { max-width:1000px; margin:0 auto; padding:20px; }
+  .screen { display:none; }
+  .screen.on { display:block; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; margin-bottom:16px; }
+  .grid { display:grid; gap:16px; grid-template-columns:1fr; }
+  label { display:block; font-size:13px; color:var(--muted); margin-bottom:4px; }
+  input, select, button { font:inherit; }
+  input, select { width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:8px; background:#fff; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 18px; cursor:pointer; }
+  button.ghost { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; padding:8px 6px; border-bottom:1px solid var(--line); }
+  .muted { color:var(--muted); font-size:13px; }
+  .badge { display:inline-block; padding:2px 9px; border-radius:99px; font-size:12px; font-weight:600; }
+  .badge.rendah { background:#fde8e4; color:#8a2b12; }
+  .badge.sedang { background:#fdf0d5; color:var(--warn); }
+  .badge.tinggi { background:#e2f3e9; color:var(--ok); }
+  .qty { font-size:30px; font-weight:750; margin:4px 0 8px; }
+  .rangebar { height:12px; background:linear-gradient(90deg,#e8ded1,#b4532a); border-radius:99px; position:relative; margin:6px 0 4px; }
+  .rangebar span { position:absolute; top:-3px; width:4px; height:18px; background:var(--ink); border-radius:2px; }
+  details summary { cursor:pointer; color:var(--accent); font-size:14px; margin-top:8px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:end; }
+  .row > div { flex:1 1 160px; }
+  .ok { color:var(--ok); }
+  .err { color:#a32a12; font-size:13px; }
+  .chart { display:flex; align-items:flex-end; gap:4px; height:120px; padding:8px 0; border-bottom:1px solid var(--line); }
+  .chart i { flex:1; background:var(--accent); opacity:.75; border-radius:3px 3px 0 0; min-height:2px; }
+  .login { max-width:380px; margin:8vh auto; }
+  @media (min-width:640px) { .grid { grid-template-columns:1fr 1fr; } main { padding:28px; } }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">ColdStart Kitchen <span class="muted" style="color:#bbb">prototipe</span></span>
+  <a href="#login" data-nav="login">Masuk</a>
+  <a href="#dashboard" data-nav="dashboard">Dashboard</a>
+  <a href="#business" data-nav="business">Usaha &amp; Menu</a>
+  <a href="#sales-new" data-nav="sales-new">Catat Penjualan</a>
+  <a href="#sales" data-nav="sales">Riwayat</a>
+  <a href="#import" data-nav="import">Impor CSV</a>
+</header>
+<main>
+
+<section class="screen on" id="login">
+  <div class="card login">
+    <h1>ColdStart Kitchen</h1>
+    <p class="muted">Rekomendasi jumlah produksi untuk warung tanpa data histori.</p>
+    <label for="u">Nama pengguna</label><input id="u" value="demo">
+    <label for="p" style="margin-top:10px">Kata sandi</label><input id="p" type="password" value="demo123">
+    <p style="margin-top:14px"><a href="#dashboard" style="color:var(--accent)">Masuk</a></p>
+    <p class="muted">Akun demo: demo / demo123</p>
+  </div>
+</section>
+
+<section class="screen" id="dashboard">
+  <div class="row">
+    <div><label>Usaha</label>
+      <select><option>Warung Bu Sari (H0)</option><option>Kafe Kampus (H3)</option><option>Gerobak Pak Joko (H7)</option></select>
+    </div>
+    <div><label>Tanggal produksi</label><input type="date" value="2026-11-23"></div>
+  </div>
+  <p class="muted">Tahap data: <strong>H0</strong> — belum ada penjualan, estimasi dari usaha serupa.</p>
+  <div class="grid">
+    <div class="card">
+      <h3 style="margin:0">Nasi Ayam</h3>
+      <div class="qty">Produksi ± 24 porsi</div>
+      <div class="rangebar"><span style="left:32%"></span></div>
+      <div class="muted">P10 16 &ndash; P90 35 &nbsp;|&nbsp; target 70%</div>
+      <p style="margin:10px 0 0"><span class="badge sedang">Sedang</span> <span class="badge" style="background:#eee">H0</span></p>
+      <details><summary>Mengapa rekomendasi ini?</summary>
+        <ul class="muted"><li>Belum ada data penjualan; estimasi dari 5 usaha serupa.</li>
+        <li>Hari Senin biasanya lebih sepi (&minus;12%).</li>
+        <li>Margin Rp6.000 per porsi vs kerugian sisa Rp6.000; target peluang cukup stok 70%.</li></ul>
+      </details>
+    </div>
+    <div class="card">
+      <h3 style="margin:0">Es Teh</h3>
+      <div class="qty">Produksi ± 30 porsi</div>
+      <div class="rangebar"><span style="left:40%"></span></div>
+      <div class="muted">P10 22 &ndash; P90 41 &nbsp;|&nbsp; target 60%</div>
+      <p style="margin:10px 0 0"><span class="badge rendah">Rendah</span> <span class="badge" style="background:#eee">H0</span></p>
+      <details><summary>Mengapa rekomendasi ini?</summary>
+        <ul class="muted"><li>Belum ada data penjualan; estimasi dari 5 usaha serupa.</li>
+        <li>Keyakinan rendah; catat penjualan harian agar rekomendasi membaik.</li></ul>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="business">
+  <div class="card">
+    <h2 style="margin-top:0">Profil Usaha</h2>
+    <div class="row">
+      <div><label>Nama</label><input value="Warung Bu Sari"></div>
+      <div><label>Tipe usaha</label><select><option>warung</option><option>cafe</option><option>gerobak</option><option>bakery</option><option>kantin</option></select></div>
+      <div><label>Tipe lokasi</label><select><option>kampus</option><option>kantor</option><option>permukiman</option><option>pasar</option></select></div>
+      <div><label>Faktor kapasitas</label><input value="1.0"></div>
+    </div>
+    <p><button>Simpan profil</button></p>
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0">Menu <button class="ghost" style="float:right">+ Tambah produk</button></h2>
+    <table>
+      <thead><tr><th>Nama</th><th>Kategori</th><th>Harga</th><th>Biaya</th><th>Sisa</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Nasi Ayam</td><td>nasi</td><td>12.000</td><td>6.000</td><td>0</td><td class="ok">aktif</td></tr>
+        <tr><td>Mie Goreng</td><td>mie</td><td>11.000</td><td>5.000</td><td>0</td><td class="ok">aktif</td></tr>
+        <tr><td>Es Teh</td><td>minuman</td><td>5.000</td><td>1.500</td><td>0</td><td class="ok">aktif</td></tr>
+        <tr><td>Pisang Goreng</td><td>snack</td><td>7.000</td><td>2.500</td><td>0</td><td class="ok">aktif</td></tr>
+        <tr><td>Roti Bakar</td><td>roti</td><td>9.000</td><td>3.500</td><td>0</td><td class="ok">aktif</td></tr>
+      </tbody>
+    </table>
+    <p class="err">Contoh galat inline: harga harus lebih besar dari 0.</p>
+  </div>
+</section>
+
+<section class="screen" id="sales-new">
+  <div class="card">
+    <h2 style="margin-top:0">Catat Penjualan</h2>
+    <div class="row"><div><label>Tanggal</label><input type="date" value="2026-11-22"></div></div>
+    <table style="margin-top:14px">
+      <thead><tr><th>Produk</th><th>Terjual</th><th>Kehabisan stok</th></tr></thead>
+      <tbody>
+        <tr><td>Nasi Ayam</td><td><input type="number" min="0" value="24" style="max-width:110px"></td><td><input type="checkbox" style="width:auto"></td></tr>
+        <tr><td>Mie Goreng</td><td><input type="number" min="0" value="18" style="max-width:110px"></td><td><input type="checkbox" style="width:auto"></td></tr>
+        <tr><td>Es Teh</td><td><input type="number" min="0" value="30" style="max-width:110px"></td><td><input type="checkbox" style="width:auto" checked></td></tr>
+        <tr><td>Pisang Goreng</td><td><input type="number" min="0" value="12" style="max-width:110px"></td><td><input type="checkbox" style="width:auto"></td></tr>
+        <tr><td>Roti Bakar</td><td><input type="number" min="0" value="9" style="max-width:110px"></td><td><input type="checkbox" style="width:auto"></td></tr>
+      </tbody>
+    </table>
+    <p><button>Simpan penjualan</button> <span class="ok">Penjualan tersimpan.</span></p>
+  </div>
+</section>
+
+<section class="screen" id="sales">
+  <div class="card">
+    <h2 style="margin-top:0">Riwayat Penjualan</h2>
+    <div class="row">
+      <div><label>Dari</label><input type="date" value="2026-11-09"></div>
+      <div><label>Sampai</label><input type="date" value="2026-11-22"></div>
+      <div><button class="ghost" style="margin-bottom:2px">Filter</button></div>
+    </div>
+    <div class="chart">
+      <i style="height:40%"></i><i style="height:55%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:70%"></i>
+      <i style="height:82%"></i><i style="height:76%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:66%"></i>
+      <i style="height:72%"></i><i style="height:90%"></i><i style="height:95%"></i><i style="height:80%"></i>
+    </div>
+    <p class="muted">14 hari terakhir &mdash; tinggi batang = porsi terjual.</p>
+    <table>
+      <thead><tr><th>Produk</th><th>Tanggal</th><th>Terjual</th><th>Kehabisan</th></tr></thead>
+      <tbody>
+        <tr><td>Nasi Ayam</td><td>2026-11-22</td><td>24</td><td>tidak</td></tr>
+        <tr><td>Nasi Ayam</td><td>2026-11-21</td><td>27</td><td>ya</td></tr>
+        <tr><td>Es Teh</td><td>2026-11-22</td><td>30</td><td>ya</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="screen" id="import">
+  <div class="card">
+    <h2 style="margin-top:0">Impor Penjualan CSV</h2>
+    <p class="muted">Format: <code>date,product,qty_sold[,sold_out]</code> &mdash; maksimal 5.000 baris / 1 MB. <a href="#import" style="color:var(--accent)">Unduh contoh CSV</a></p>
+    <p><input type="file" accept=".csv"></p>
+    <p><button>Impor</button></p>
+    <p class="ok">Hasil: 120 baris diterima.</p>
+    <p class="err">Contoh galat: baris 7: tanggal tidak valid; baris 12: produk tidak dikenal.</p>
+  </div>
+</section>
+
+</main>
+<script>
+(function () {
+  var screens = Array.prototype.slice.call(document.querySelectorAll('.screen'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+  function show(name) {
+    var found = false;
+    screens.forEach(function (s) {
+      var on = s.id === name;
+      s.classList.toggle('on', on);
+      if (on) { found = true; }
+    });
+    if (!found) { screens.forEach(function (s, i) { s.classList.toggle('on', i === 0); }); }
+    links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-nav') === name); });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
+  if (location.hash) { show(location.hash.slice(1)); }
+})();
+</script>
+</body>
+</html>
