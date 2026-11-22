@@ -23,6 +23,31 @@
     Memuat rekomendasi…
   </p>
   <div class="card-grid" id="recommendation-grid" aria-live="polite"></div>
+  <template id="rec-card-template">
+    <article class="rec-card">
+      <h3 data-field="name"></h3>
+      <div class="rec-qty" data-field="qty"></div>
+      <div class="rec-range">
+        <div class="range-track"><div class="range-marker" data-field="marker"></div></div>
+        <div class="range-labels">
+          <span data-field="p10"></span>
+          <span data-field="p50"></span>
+          <span data-field="p90"></span>
+        </div>
+      </div>
+      <div class="rec-meta">
+        <span class="badge" data-field="confidence"></span>
+        <span class="badge badge-stage" data-field="stage"></span>
+        <span class="badge badge-stage" data-field="days"></span>
+        <span class="badge badge-stage" data-field="target"></span>
+      </div>
+      <p class="muted" data-field="band"></p>
+      <details class="reasons">
+        <summary>Mengapa rekomendasi ini?</summary>
+        <ul data-field="reasons"></ul>
+      </details>
+    </article>
+  </template>
   <noscript><p class="error">JavaScript diperlukan untuk menampilkan kartu rekomendasi.</p></noscript>
 {% endif %}
 {% endblock %}

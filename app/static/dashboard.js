@@ -27,42 +27,35 @@
   }
 
   function renderCard(item) {
-    var card = el("article", "rec-card");
+    var template = document.getElementById("rec-card-template");
+    var card = template.content.firstElementChild.cloneNode(true);
+    var field = function (name) { return card.querySelector('[data-field="' + name + '"]'); };
+
     card.setAttribute("data-product-id", item.product_id);
+    field("name").textContent = item.name;
+    field("qty").textContent = "Produksi ± " + item.recommended_qty + " porsi";
 
-    card.appendChild(el("h3", null, item.name));
-    card.appendChild(el("div", "rec-qty", "Produksi ± " + item.recommended_qty + " porsi"));
-
-    var range = el("div", "rec-range");
-    var track = el("div", "range-track");
-    var marker = el("div", "range-marker");
+    var marker = field("marker");
     marker.style.left = markerPosition(item.p10, item.p90, item.recommended_qty);
     marker.title = "Rekomendasi " + item.recommended_qty + " porsi";
-    track.appendChild(marker);
-    range.appendChild(track);
-    var labels = el("div", "range-labels");
-    labels.appendChild(el("span", null, "P10 " + item.p10));
-    labels.appendChild(el("span", null, "P50 " + item.p50));
-    labels.appendChild(el("span", null, "P90 " + item.p90));
-    range.appendChild(labels);
-    card.appendChild(range);
 
-    var meta = el("div", "rec-meta");
-    meta.appendChild(el("span", "badge badge-" + item.confidence, confidenceLabel(item.confidence)));
-    meta.appendChild(el("span", "badge badge-stage", item.stage));
-    meta.appendChild(el("span", "badge badge-stage", item.n_days + " hari data"));
-    meta.appendChild(el("span", "badge badge-stage", "Target " + Math.round(item.alpha * 100) + "%"));
-    card.appendChild(meta);
+    field("p10").textContent = "P10 " + item.p10;
+    field("p50").textContent = "P50 " + item.p50;
+    field("p90").textContent = "P90 " + item.p90;
 
-    var alpha = el("p", "muted", "Peluang cukup stok " + Math.round(item.alpha * 100) + "% · band terdekat " + item.nearest_band);
-    card.appendChild(alpha);
+    var confidence = field("confidence");
+    confidence.classList.add("badge-" + item.confidence);
+    confidence.textContent = confidenceLabel(item.confidence);
+    field("stage").textContent = item.stage;
+    field("days").textContent = item.n_days + " hari data";
+    field("target").textContent = "Target " + Math.round(item.alpha * 100) + "%";
+    field("band").textContent = "Peluang cukup stok " + Math.round(item.alpha * 100) +
+      "% · band terdekat " + item.nearest_band;
 
-    var details = el("details", "reasons");
-    details.appendChild(el("summary", null, "Mengapa rekomendasi ini?"));
-    var list = el("ul");
-    (item.reasons || []).forEach(function (reason) { list.appendChild(el("li", null, reason)); });
-    details.appendChild(list);
-    card.appendChild(details);
+    var list = field("reasons");
+    (item.reasons || []).forEach(function (reason) {
+      list.appendChild(el("li", null, reason));
+    });
     return card;
   }
 

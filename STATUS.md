@@ -1,5 +1,5 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T4.1
+Last updated: 2026-11-22T00:10:00Z   Current task: T4.6
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
@@ -19,10 +19,10 @@ Last updated: 2026-11-22T00:10:00Z   Current task: T4.1
 | T3.5 | 3.5 | AUTO | DONE | confidence rules + Indonesian reason templates in fixed order; 6 tests |
 | T3.6 | 3.6 | AUTO | DONE | pure engine + product/business recommendation APIs, ownership; 84 tests total |
 | T3.7 | 3.7 | AUTO | DONE | LOO-business backtest: H0 WAPE 41.4% vs global 54.1%, H7 39.8%, coverage 82.9-86.6%; make report |
-| T4.1 | 4.1 | AUTO | TODO | |
-| T4.2 | 4.2 | AUTO | TODO | |
-| T4.3 | 4.3 | AUTO | TODO | |
-| T4.4 | 4.4 | AUTO | TODO | |
+| T4.1 | 4.1 | AUTO | DONE | dashboard layout, business selector, date default, mobile-first CSS (640px), viewport meta |
+| T4.2 | 4.2 | AUTO | DONE | card template partial: qty, range track+marker, confidence badge w/ text, stage, reasons |
+| T4.3 | 4.3 | AUTO | DONE | /sales history table + 14-day inline SVG bars + date filter; verified live |
+| T4.4 | 4.4 | AUTO | DONE | dashboard.js fetches /api/businesses/{id}/recommendations?date=; verified live in browser for H0/H3/H7 |
 | T4.5 | 4.5 | AUTO | DONE | login/logout/session, env demo creds, idempotent auto-seed H0/H3/H7, rate limit 429; 95 tests |
 | T4.6 | 4.6 | AUTO+HUMAN | TODO | |
 | T5.1 | 5.1 | AUTO | TODO | |

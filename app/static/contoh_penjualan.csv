@@ -1,0 +1,5 @@
+date,product,qty_sold,sold_out
+2026-11-18,Nasi Ayam,24,false
+2026-11-18,Es Teh,30,true
+2026-11-19,Nasi Ayam,22,false
+2026-11-19,Es Teh,28,false
