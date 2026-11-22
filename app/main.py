@@ -46,11 +46,13 @@ def create_app(database_url: str | None = None, seed: bool = True, startup_check
     from app.routers import auth as auth_router
     from app.routers import businesses as businesses_router
     from app.routers import pages as pages_router
+    from app.routers import recommendations as rec_router
     from app.routers import sales as sales_router
 
     app.include_router(auth_router.router)
     app.include_router(businesses_router.router)
     app.include_router(sales_router.router)
+    app.include_router(rec_router.router)
     app.include_router(pages_router.router)
     return app
 

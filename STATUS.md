@@ -1,5 +1,5 @@
 # STATUS
-Last updated: 2026-11-22T00:10:00Z   Current task: T3.1
+Last updated: 2026-11-22T00:10:00Z   Current task: T3.7
 
 | Task | WBS | Type | Status | Notes |
 |---|---|---|---|---|
@@ -12,12 +12,12 @@ Last updated: 2026-11-22T00:10:00Z   Current task: T3.1
 | T2.4 | 2.4 | AUTO | DONE | POST /sales/new all-or-nothing multi-product form; 27 tests |
 | T2.5 | 2.5 | AUTO | DONE | upsert idempotent, inclusive range filter, validation, ownership; 23 tests |
 | T2.6 | 2.6 | AUTO | DONE | strict CSV parser (header/date/future/qty/product/dup/size/UTF-8) all-or-nothing; 41 tests |
-| T3.1 | 3.1 | AUTO | TODO | |
-| T3.2 | 3.2 | AUTO | TODO | |
-| T3.3 | 3.3 | AUTO | TODO | |
-| T3.4 | 3.4 | AUTO | TODO | |
-| T3.5 | 3.5 | AUTO | TODO | |
-| T3.6 | 3.6 | AUTO | TODO | |
+| T3.1 | 3.1 | AUTO | DONE | reference features + kNN + weighted-median prior, fallbacks; 7 tests |
+| T3.2 | 3.2 | AUTO | DONE | shrinkage w=n/(n+4), stages, stockout 1.15 uplift, weekday blend n>=7; 6 tests |
+| T3.3 | 3.3 | AUTO | DONE | nbinom P10/P50/P90 over 504 combos, width non-increasing; 4 tests |
+| T3.4 | 3.4 | AUTO | DONE | newsvendor alpha, clamping, worked examples, 422 path; 8 tests |
+| T3.5 | 3.5 | AUTO | DONE | confidence rules + Indonesian reason templates in fixed order; 6 tests |
+| T3.6 | 3.6 | AUTO | DONE | pure engine + product/business recommendation APIs, ownership; 84 tests total |
 | T3.7 | 3.7 | AUTO | TODO | |
 | T4.1 | 4.1 | AUTO | TODO | |
 | T4.2 | 4.2 | AUTO | TODO | |
